@@ -9,7 +9,7 @@ export const POST = async (req: Request) => {
   const lastName = data.last_name
   const imageUrl = data.image_url
   const id = data.id
-11500
+
   await db.user.create({
     data: {
       id: id,
@@ -20,6 +20,7 @@ export const POST = async (req: Request) => {
 
     }
 })
+
   console.log('user created');
   return new Response('Webhook received', {status: 200})
 }
