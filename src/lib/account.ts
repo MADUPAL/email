@@ -38,14 +38,15 @@ export class Account {
 
   async performInitialSync() {
     try {
-      //start the sync process
+      //start the sync process (initial sync endpoint)
       let syncResponse = await this.startSync()
+      //wait untill its ready
       while (!syncResponse.ready) {
         await new Promise(resolve => setTimeout(resolve, 1000))
         syncResponse = await this.startSync()
       }
       
-      //get the bookmark delta token
+      //get the bookmark deltaToken
       let storedDeltaToken: string = syncResponse.syncUpdatedToken
 
       let updatedResponse = await this.getUpdatedEmails({deltaToken: storedDeltaToken})
@@ -57,7 +58,7 @@ export class Account {
       let allEmails: EmailMessage[] = updatedResponse.records
 
       //fetch more pages if there are more
-      while (updatedResponse.nextDeltaToken) {
+      while (updatedResponse.nextPageToken) {
         updatedResponse = await this.getUpdatedEmails({pageToken: updatedResponse.nextPageToken})
         allEmails = allEmails.concat(updatedResponse.records)
         if (updatedResponse.nextDeltaToken) {

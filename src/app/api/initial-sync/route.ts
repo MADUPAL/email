@@ -1,6 +1,7 @@
 // /api/initial-sync
 import { Account } from "@/lib/account";
 import { db } from "@/server/db";
+import { detectContentType } from "next/dist/server/image-optimizer";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req:NextRequest) => {
@@ -20,6 +21,19 @@ export const POST = async (req:NextRequest) => {
   
   //22207
   const account = new Account(dbAccount.accessToken)
-  const emails = await account.performInitialSync()
-  await syncEmailsToDatabase(emails)
+  const response = await account.performInitialSync()
+  if (!response) {
+    return NextResponse.json({error:'Failed to perform intitial sync'}, {status: 500})
+  }
+
+  const {emails, deltaToken} = response
+
+  await db.account.update({
+    where: {
+      id: accountId,
+    },
+    data: {
+      nextDeltaToken: deltaToken
+    }
+  })
 }

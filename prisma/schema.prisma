@@ -23,11 +23,11 @@ model User {
 // userId: clerk userId
 
 model Account {
-    id           String @id @default(cuid())
-    userId       String
-    accessToken  String @unique
-    emailAddress String
-    name         String
-
-    user User @relation(fields: [userId], references: [id])
+    id             String  @id @default(cuid())
+    userId         String
+    accessToken    String  @unique
+    emailAddress   String
+    name           String
+    nextDeltaToken String?
+    user           User    @relation(fields: [userId], references: [id])
 }
