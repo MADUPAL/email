@@ -1,5 +1,6 @@
 // /api/initial-sync
 import { Account } from "@/lib/account";
+import { syncEmailsToDatabase } from "@/lib/sync-to-db";
 import { db } from "@/server/db";
 import { detectContentType } from "next/dist/server/image-optimizer";
 import { NextRequest, NextResponse } from "next/server";
@@ -36,4 +37,9 @@ export const POST = async (req:NextRequest) => {
       nextDeltaToken: deltaToken
     }
   })
+
+  await syncEmailsToDatabase(emails, accountId)
+
+  console.log('sync completed', deltaToken)
+  return NextResponse.json({success: true}, {status: 200})
 }
