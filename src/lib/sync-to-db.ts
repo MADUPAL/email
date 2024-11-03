@@ -13,6 +13,8 @@ export async function syncEmailsToDatabase(emails:EmailMessage[], accountId: str
 
   try {
     // Promise.all(emails.map((email, index) => upsertEmail(email, accountId, index)))
+
+    //await and insert sequentially
     for (const email of emails) {
       await upsertEmail(email, accountId, 0)
     }
