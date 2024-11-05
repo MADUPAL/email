@@ -10,19 +10,21 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AccountSwitcher from "./account-switcher";
+import Sidebar from "./sidebar";
 
 type Props = {
   defaultLayout: number[] | undefined;
   navCollapsedSize: number;
-  defaultCollapse: boolean;
+  defaultCollapsed?: boolean;
 };
 
 const Mail = ({
   defaultLayout = [20, 32, 48],
   navCollapsedSize,
-  defaultCollapse,
+  defaultCollapsed = false,
 }: Props) => {
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -58,10 +60,11 @@ const Mail = ({
               )}
             >
               {/* acount switcher */}
-              Account Switcher
+              <AccountSwitcher isCollapsed={isCollapsed} />
             </div>
             <Separator />
             {/* side bar */}
+            <Sidebar isCollapsed={isCollapsed} />
             Sidebar
             <div className="flex-1"></div>
             {/* AI */}
