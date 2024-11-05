@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AccountSwitcher from "./account-switcher";
 import Sidebar from "./sidebar";
+import ThreadList from "./thread-list";
 
 type Props = {
   defaultLayout: number[] | undefined;
@@ -81,13 +82,13 @@ const Mail = ({
                   value="inbox"
                   className="text-zinc-600 dark:text-zinc-200"
                 >
-                  Inbox
+                  <ThreadList />
                 </TabsTrigger>
                 <TabsTrigger
                   value="done"
                   className="text-zinc-600 dark:text-zinc-200"
                 >
-                  Done
+                  <ThreadList />
                 </TabsTrigger>
               </TabsList>
             </div>
