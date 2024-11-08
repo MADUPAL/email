@@ -1,5 +1,4 @@
 import { api } from '@/trpc/react'
-import React from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import {atom, useAtom} from 'jotai';
 //jotai 35400
@@ -29,7 +28,7 @@ const useThreads = () => {
     accountId,
     threadId,
     setThreadId,
-    account: accounts?.find(e => e.id === accountId)
+    account: accounts?.find(e => e.id === accountId)// current account(log in)
   }
 }
 
